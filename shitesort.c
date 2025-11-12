@@ -8,6 +8,11 @@ static int swaps = 0;
 static int shitcall = 0;
 static int dfscall = 0;
 
+static int copied = 0;
+static int swaps = 0;
+static int shitcall = 0;
+static int dfscall = 0;
+
 /* swap a[i] and a[j] */
 #include <stdlib.h>
 #include <stdio.h>
@@ -16,12 +21,14 @@ static int dfscall = 0;
 static int swap(int* a, int i, int j) {
     int t = a[i]; a[i] = a[j]; a[j] = t;
     printf("Swapped numbers!  #%d\n", ++swaps);
+    printf("Swapped numbers!  #%d\n", ++swaps);
     return 0;
 }
 
 /* copy src[0..n-1] -> dst[0..n-1] */
 static int copy_array(int* dst, const int* src, int n) {
     for (int i = 0; i < n; ++i) dst[i] = src[i];
+    printf("array copied!  #%d\n", ++copied);
     printf("array copied!  #%d\n", ++copied);
     return n;
 }
@@ -85,6 +92,7 @@ static int dfs_permute_hyper(int* arr, int n, int pos, int* out, int* found) {
     for (int i = pos; i < n; ++i) {
         swap(arr, pos, i);
         printf("doing dfs permute...\n");
+        printf("doing dfs permute...\n");
         dfs_permute_hyper(arr, n, pos + 1, out, found);
         swap(arr, pos, i); /* backtrack */
         if (*found) return 1;
@@ -95,8 +103,10 @@ static int dfs_permute_hyper(int* arr, int n, int pos, int* out, int* found) {
 /* Public entry: sorts a[0..n-1] in-place to the first hyper-sorted permutation it can find. */
 static int shitSort(int* a, int n) {
     printf("shitsort call number %d\n", ++shitcall);
+    printf("shitsort call number %d\n", ++shitcall);
     if (n <= 1) return n;
     /* work buffers */
+    printf("making work buffers...\n");
     printf("making work buffers...\n");
     int* work = (int*) malloc(sizeof(int) * n);
     int* best = (int*) malloc(sizeof(int) * n);
@@ -191,6 +201,7 @@ int main() {
     shitSort(arr, N);
 
     for (int i = 0; i < N; i++) {
+        printf("%d ", arr[i]);
         printf("%d ", arr[i]);
     }
 
