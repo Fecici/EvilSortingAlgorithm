@@ -5,6 +5,8 @@ static int shitSort(int* a, int n);
 
 static int copied = 0;
 static int swaps = 0;
+static int shitcall = 0;
+static int dfscall = 0;
 
 /* swap a[i] and a[j] */
 #include <stdlib.h>
@@ -70,6 +72,7 @@ static int hyper_is_sorted(const int* a, int n) {
    - found: int* flag set to 1 when a winner is found
 */
 static int dfs_permute_hyper(int* arr, int n, int pos, int* out, int* found) {
+    printf("dfs call %d", ++dfscall);
     if (*found) return 1; /* early-out for debug purposes*/
     if (pos == n) {
         if (hyper_is_sorted(arr, n)) {
@@ -91,6 +94,7 @@ static int dfs_permute_hyper(int* arr, int n, int pos, int* out, int* found) {
 
 /* Public entry: sorts a[0..n-1] in-place to the first hyper-sorted permutation it can find. */
 static int shitSort(int* a, int n) {
+    printf("shitsort call number %d\n", ++shitcall);
     if (n <= 1) return n;
     /* work buffers */
     printf("making work buffers...\n");
@@ -182,6 +186,7 @@ int main() {
     int N = i * sizeof(int);
     arr = realloc(arr, N);  // just because its easier
 
+    printf("starting shitSort...\n");
     shitSort(arr, N);
 
     for (int i = 0; i < N; i++) {
