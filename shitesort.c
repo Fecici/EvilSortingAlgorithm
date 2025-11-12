@@ -178,7 +178,7 @@ int main() {
     shitSort(arr, N);
 
     for (int i = 0; i < N; i++) {
-        printf("%d ");
+        printf("%d ", arr[i]);
     }
 
     free(arr);
