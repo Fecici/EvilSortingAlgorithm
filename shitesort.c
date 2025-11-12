@@ -3,6 +3,9 @@
 
 static int shitSort(int* a, int n);
 
+static int copied = 0;
+static int swaps = 0;
+
 /* swap a[i] and a[j] */
 #include <stdlib.h>
 #include <stdio.h>
@@ -10,12 +13,14 @@ static int shitSort(int* a, int n);
 /* swap a[i] and a[j] */
 static int swap(int* a, int i, int j) {
     int t = a[i]; a[i] = a[j]; a[j] = t;
+    printf("Swapped numbers!  #%d\n", ++swaps);
     return 0;
 }
 
 /* copy src[0..n-1] -> dst[0..n-1] */
 static int copy_array(int* dst, const int* src, int n) {
     for (int i = 0; i < n; ++i) dst[i] = src[i];
+    printf("array copied!  #%d\n", ++copied);
     return n;
 }
 
@@ -65,7 +70,7 @@ static int hyper_is_sorted(const int* a, int n) {
    - found: int* flag set to 1 when a winner is found
 */
 static int dfs_permute_hyper(int* arr, int n, int pos, int* out, int* found) {
-    //if (*found) return 1; /* early-out for debug purposes*/
+    if (*found) return 1; /* early-out for debug purposes*/
     if (pos == n) {
         if (hyper_is_sorted(arr, n)) {
             copy_array(out, arr, n);
@@ -76,6 +81,7 @@ static int dfs_permute_hyper(int* arr, int n, int pos, int* out, int* found) {
     }
     for (int i = pos; i < n; ++i) {
         swap(arr, pos, i);
+        printf("doing dfs permute...\n");
         dfs_permute_hyper(arr, n, pos + 1, out, found);
         swap(arr, pos, i); /* backtrack */
         if (*found) return 1;
@@ -87,6 +93,7 @@ static int dfs_permute_hyper(int* arr, int n, int pos, int* out, int* found) {
 static int shitSort(int* a, int n) {
     if (n <= 1) return n;
     /* work buffers */
+    printf("making work buffers...\n");
     int* work = (int*) malloc(sizeof(int) * n);
     int* best = (int*) malloc(sizeof(int) * n);
     if (!work || !best) { free(work); free(best); return 0; }
